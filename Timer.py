@@ -27,6 +27,7 @@ class TimerClass(threading.Thread):
                 runpy.run_path('./Check_Prices_Over.py', run_name='__main__')
                 runpy.run_path('./Exec_ProcessNAV.py', run_name='__main__')
                 runpy.run_path('./Exec_Save_PositionBonds.py', run_name='__main__')
+                runpy.run_path('./Save_Position_VaR.py', run_name='__main__')
                 self.event.wait(60 * self.Interval)
                 # print(str(datetime.datetime.now()))
                 # self.event.wait(15)
@@ -37,6 +38,7 @@ class TimerClass(threading.Thread):
             runpy.run_path('./Check_Prices_Over.py', run_name='__main__')
             runpy.run_path('./Exec_ProcessNAV.py', run_name='__main__')
             runpy.run_path('./Exec_Save_PositionBonds.py', run_name='__main__')
+            runpy.run_path('./Save_Position_VaR.py', run_name='__main__')
             self.event.set()
 
     def stop(self):

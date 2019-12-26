@@ -572,3 +572,12 @@ class Queries():
         query = f"SELECT * FROM Products WHERE Id IN ({Id_Products})"
 
         return query
+
+    # Get Position for Bloomberg VaR
+    def getPositionVaR(self, refdate):
+
+        query = f"SELECT * FROM vRskLayoutInputPORTv6 WHERE RefDate='{refdate}'"
+
+        return query
+
+
