@@ -13,7 +13,7 @@ import numpy as np
 # Main Script
 if __name__ == '__main__':
     # Set Refdate as Integer
-    # Refdate = 20190905
+    # Refdate = 20191227
     Refdate = int(sys.argv[1])
     Log_DirSrc = sys.argv[2]
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     SQL_Server_Connection = SQL_Server_Connection(database='PM')
 
     ######################################## Loop Through Assets ########################################
-    # Asset = 'Futures'
+    # Asset = 'Funds'
     # AssetGroup = 'Futures'
     # Refdate = 20190905
     for Asset in Assets:

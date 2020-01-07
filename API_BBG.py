@@ -32,6 +32,34 @@ def BBG_POST(bbg_request, tickers, fields, date_start=None, date_end=None):
 
     return r
 
+
+def BBG_POST_Tst(bbg_request, tickers, fields, date_start=None, date_end=None, overrides=None):
+    
+    # Variaveis BDP ou BDH
+    if bbg_request == "BDP":
+        url = "http://10.1.1.31:8099/App_BBG_Request/BDP/"
+        data_post = {
+            "tickers": tickers,
+            "fields": fields,
+            "overrides": overrides
+        }
+
+    elif bbg_request == "BDH":
+        url = "http://10.1.1.31:8099/App_BBG_Request/BDH/"
+        data_post = {
+            "tickers": tickers,
+            "fields": fields,
+            "date_start": date_start,
+            "date_end": date_end,
+            "overrides": overrides
+        }
+
+    # Make Requests
+    r = requests.post(url=url, data=json.dumps(data_post))
+  
+
+    return r
+
    #  PM_BBG = BBG_POST(bbg_request='BDH', tickers=PM_Products['BBGTicker'].tolist(),
    #                fields=fields, date_start=20190417,
    #                date_end=20190417)

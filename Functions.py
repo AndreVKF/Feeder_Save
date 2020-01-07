@@ -170,6 +170,30 @@ def Create_PriceDF(BBG_Req, Refdate, AssetGroup, SQL_Server_Connection, Queries)
         PM_BBGPriceDF = pd.merge(PM_BBGPriceDF, Principal_Factor_DF,
                                  on='BBGTicker', how='left')
 
+        #### Adjust YAS Risk dos Corporates Bonds ####
+        # Calendario
+        strRefdate = datetime.strptime(str(Refdate), '%Y%m%d').strftime('%Y-%m-%d')
+
+        Calendar_DF = SQL_Server_Connection.getData(query='SELECT * FROM Feriados_USA ORDER BY Data')
+        Calendar_List = Calendar_DF['Data'].tolist()
+        Calendar_USA = Calendar(Calendar_List, ['Sunday', 'Saturday'], name='T+2')
+        settleDt = Calendar_USA.offset(strRefdate, 2).strftime("%Y%m%d")
+
+        overrides = {"YAS_YLD_FLAG": "15", "SETTLE_DT": settleDt}
+
+        #### Pega valor do YAS_RISK Adjusted Value ####
+        YAS_RISK_BBG = BBG_POST_Tst(bbg_request='BDP', tickers=PM_Products['BBGTicker'].tolist(),
+                                        fields=['YAS_RISK'], date_start=Refdate,
+                                        date_end=Refdate, overrides=overrides)
+
+         # Formata DF
+        YAS_RISK_DF = (BBG_Json_to_DF(Request_type='BDP',
+                                              BBG_response=YAS_RISK_BBG)).reset_index()
+        YAS_RISK_DF.rename(columns={'index': 'BBGTicker'}, inplace=True)
+
+        PM_BBGPriceDF = pd.merge(PM_BBGPriceDF, YAS_RISK_DF,
+                                 on='BBGTicker', how='left')
+
     ########## Pega precos dos Underlying Securities cadastrados nas options/futures ##########
     elif AssetGroup == 'Listed Opt' or AssetGroup == 'Futures':
         # Underlying Products
@@ -268,7 +292,7 @@ def Create_PriceDF(BBG_Req, Refdate, AssetGroup, SQL_Server_Connection, Queries)
         # Marretada CSAN 8 1/4 11/29/49
         PM_BBGPriceDF['DV01'] = np.where(
             PM_BBGPriceDF['Instrument'] == 'Letras Financeiras do Tesouro (LFT)', np.nan,
-            np.where(PM_BBGPriceDF['Id_Product'] == 1288, 0.15/10000, PM_BBGPriceDF['RISK_MID']/10000))
+            np.where(PM_BBGPriceDF['Id_Product'] == 1288, 0.15/10000, PM_BBGPriceDF['YAS_RISK']/10000))
 
         Prices_DF = pd.DataFrame({
             'Date': str(Refdate),

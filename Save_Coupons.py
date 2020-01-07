@@ -15,7 +15,7 @@ import numpy as np
 # Main Script
 if __name__ == '__main__':
     # Set Refdate as Integer
-    # Refdate = 20190918
+    # Refdate = 20191227
     Refdate = int(sys.argv[1])
     Log_DirSrc = sys.argv[2]
 

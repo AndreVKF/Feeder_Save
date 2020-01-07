@@ -385,7 +385,7 @@ class Queries():
 
         """ % (self.putQuotes(strRefdate))
 
-        # Return query
+        # Return queryf
         return query
 
     # Get query ativos que devem ter preco 1
@@ -576,8 +576,15 @@ class Queries():
     # Get Position for Bloomberg VaR
     def getPositionVaR(self, refdate):
 
-        query = f"SELECT * FROM vRskLayoutInputPORTv6 WHERE RefDate='{refdate}'"
+        query = f"""SELECT 
+            RefDate
+            ,PortfolioName
+            ,Name
+            ,BBGTicker
+            ,Quantity
+        FROM 
+            vRskLayoutInputPORTv6 
+        WHERE 
+            RefDate='{refdate}'"""
 
         return query
-
-
