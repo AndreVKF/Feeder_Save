@@ -7,6 +7,12 @@ import sys
 import time
 from datetime import datetime
 
+from ProcessNAV.GenericClasses.API_BBG import API_BBG
+
+sys.path.insert(1, 'S:\\Management and Trading\\Feeder_Prices\\Python\\ProcessNAV\\GenericClasses')
+sys.path.insert(1, 'S:\\Management and Trading\\Feeder_Prices\\Python\\ProcessNAV\\Passivo\\Classes')
+sys.path.insert(1, 'S:\\Management and Trading\\Feeder_Prices\\Python\\ProcessNAV\\Passivo\\Controller')
+
 # Main Script
 if __name__ == '__main__':
 

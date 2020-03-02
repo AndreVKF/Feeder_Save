@@ -322,7 +322,7 @@ def Create_PriceDF(BBG_Req, Refdate, AssetGroup, SQL_Server_Connection, Queries)
         PM_BBGPriceDF['Vl'] = (PM_BBGPriceDF['CONTRACT_VALUE'] * PM_BBGPriceDF['Mult'])
 
         PM_BBGPriceDF['DV01'] = np.where(PM_BBGPriceDF['Instrument'] == 'BMF US Dollar Fut (UC)', np.nan,
-                                         np.where(PM_BBGPriceDF['Instrument'] == 'US Treasury Note Futures Contract (OI)', 9 * PM_BBGPriceDF['CONTRACT_VALUE'] / 10000,
+                                         np.where(PM_BBGPriceDF['Instrument'] == 'US Treasury Note Futures Contract (OI)', 8.35 * PM_BBGPriceDF['CONTRACT_VALUE'] / 10000,
                                                   np.where(PM_BBGPriceDF['Instrument'] == 'BMF Cupom Cambial (EV)', 50000/(1+(PM_BBGPriceDF['PX_LAST']/100)*PM_BBGPriceDF['Days_To_Valuation']/360) - 50000/(1+((PM_BBGPriceDF['PX_LAST']+0.01)/100)*PM_BBGPriceDF['Days_To_Valuation']/360), np.nan)))
 
         PM_BBGPriceDF['Delta1$'] = np.where(PM_BBGPriceDF['Instrument'] == 'BMF Cupom Cambial (EV)', (-1 * PM_BBGPriceDF['Under_CONTRACT_VALUE']),
