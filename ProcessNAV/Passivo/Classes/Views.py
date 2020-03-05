@@ -8,7 +8,7 @@ import datetime as dt
 from datetime import datetime, timedelta
 from bizdays import *
 
-from Basic_Env import Basic_Env
+from ProcessNAV.GenericClasses.Basic_Env import Basic_Env
 from ProcessNAV.Passivo.Classes.PassivoQueries import *
 
 class Views(Basic_Env):
@@ -173,6 +173,8 @@ class Views(Basic_Env):
             Update Share_Operations Table on Database
         """
         DF_Base = self.DF_BaseShareMov
+
+        
 
         # Movimentação 1 => Cotas
         # Movimentação 2 => Financeiro
@@ -906,8 +908,8 @@ class Views(Basic_Env):
                         ,rowSubs['Id_Product']
                         ,row['Request_Date']
                         ,row['ShareValue']
-                        ,abs(row['ShareValue']*row['Td_CloseShares'])*-1
-                        ,row['Td_CloseShares']))
+                        ,abs(row['ShareValue']*rowSubs['Td_CloseShares'])*-1
+                        ,rowSubs['Td_CloseShares']))
 
                     # Update Redemp
                     Redemp+=np.round(row['Td_CloseShares'], self.RoundShareAmount)
@@ -945,12 +947,12 @@ class Views(Basic_Env):
 
                 # Fill Share_Redemptions_List
                 self.Share_Redemptions_List.append((self.strRefdate
-                    ,row['Id_ShareMov']
-                    ,rowSubs['Id_ShareMov']
-                    ,Id_Shareholder
-                    ,rowSubs['Id_Product']
-                    ,row['Request_Date']
-                    ,row['ShareValue']
-                    ,abs(row['ShareValue']*Redemp)*-1
-                    ,Redemp))
-       
+                        ,row['Id_ShareMov']
+                        ,rowSubs['Id_ShareMov']
+                        ,Id_Shareholder
+                        ,rowSubs['Id_Product']
+                        ,row['Request_Date']
+                        ,row['ShareValue']
+                        ,abs(row['ShareValue']*rowSubs['Td_CloseShares'])*-1
+                        ,rowSubs['Td_CloseShares']))
+
