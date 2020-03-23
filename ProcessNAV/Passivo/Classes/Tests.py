@@ -9,10 +9,22 @@ sys.path.insert(1, '..\\..\\GenericClasses\\')
 
 from Views import Views
 
-Refdate = 20200227
+Refdate = 20200310
 dtRefdate = pd.to_datetime(str(Refdate), format="%Y%m%d")
 
 tstView = Views(Refdate=Refdate)
+
+DF_Base = tstView.DF_BaseShareMov
+
+
+DF_Base['Net_Amount'] = np.where(DF_Base['Id_Shareholder_MovType']==1, np.round(DF_Base['Value']*DF_Base['Amount'], 2),
+                                np.where(DF_Base['Id_Shareholder_MovType']==2, np.round(DF_Base['Amount'], 2),
+                                np.where(DF_Base['Id_Shareholder_MovType']==3, np.round(DF_Base['Yd_Shareholder_ShareQtt'].abs()*DF_Base['Value']*-1, 2), np.NaN)))
+
+DF_Base['Number_Shares'] = np.where(DF_Base['Id_Shareholder_MovType']==1, np.round(DF_Base['Amount'], 7),
+                                np.where(DF_Base['Id_Shareholder_MovType']==2, np.round(DF_Base['Amount']/DF_Base['Value'], 7),
+                                np.where(DF_Base['Id_Shareholder_MovType']==3, np.round(DF_Base['Yd_Shareholder_ShareQtt'].abs()*-1, 7), np.NaN)))
+
 
 Base_DF = tstView.DF_Mod_Share_Subscriptions[['Refdate'
     ,'Id_ShareMov'

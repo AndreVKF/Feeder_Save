@@ -94,7 +94,7 @@ class PassivoQueries():
             ,Prices.Value AS Value
             ,Share_Mov.Id_Shareholder_MovType AS Id_Shareholder_MovType
             ,Products.Id AS Id_Product
-            ,Share_Mov.Amount AS Amount
+            ,ISNULL(Share_Mov.Amount, 0) AS Amount
             ,Shareholders_Distribuidores.Name AS Shareholders_Distribuidores_Name
             ,Shareholders.Info1 AS Cod_Itau
             ,Shareholders.Cod_Cotista_Distribuidor AS Cod_Cotista_Distribuidor
@@ -102,7 +102,7 @@ class PassivoQueries():
             ,Shareholder_OperationType.Name AS OperationType
             ,Shareholder_MovType.Id AS Id_MovType
             ,Shareholder_MovType.Name AS MovType
-            ,Yd_Shareholder_Position.Td_CloseShareQtt AS Yd_Shareholder_ShareQtt
+            ,ISNULL(Yd_Shareholder_Position.Td_CloseShareQtt,0) AS Yd_Shareholder_ShareQtt
             
 
         FROM 

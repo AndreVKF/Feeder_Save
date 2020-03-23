@@ -174,8 +174,6 @@ class Views(Basic_Env):
         """
         DF_Base = self.DF_BaseShareMov
 
-        
-
         # Movimentação 1 => Cotas
         # Movimentação 2 => Financeiro
         # Movimentação 3 => Resgate Total

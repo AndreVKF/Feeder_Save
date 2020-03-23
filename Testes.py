@@ -69,3 +69,20 @@ WHERE
 '''
 
 
+
+
+from datetime import datetime
+from bizdays import *
+
+import pandas as pd
+import numpy as np
+
+import sys
+sys.path.insert(1, '..\\..\\GenericClasses\\')
+
+from ProcessNAV.Passivo.Classes import Views
+
+Refdate = 20200323
+dtRefdate = pd.to_datetime(str(Refdate), format="%Y%m%d")
+
+tstView = Views.Views(Refdate=Refdate)
